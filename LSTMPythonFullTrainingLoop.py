@@ -3,6 +3,23 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+# Add this _init_weights function to your main code. It will initialize the initial values of matrices. If you do not initialize your matrices 
+# with proper values, your model will suffer from vanishing gradients and will perform very badly.
+"""
+def _init_weights(self):
+    for name, param in self.named_parameters():
+        if 'Wh' in name:  # Recurrent weights (Hidden to Hidden)
+            nn.init.orthogonal_(param)  # Special math to keep gradients stable
+        elif 'Wx' in name: # Input weights
+            nn.init.xavier_uniform_(param)
+        elif 'bias' in name:
+            nn.init.constant_(param, 0)
+    
+    # Important: Force forget gate to remember things at start
+    nn.init.constant_(self.Wxf.bias, 1.0) 
+"""
+
 # ─────────────────────────────────────────────────────────────────────────────
 # TASK: predict the next value in a sine wave
 #       input  → last SEQ_LEN values
