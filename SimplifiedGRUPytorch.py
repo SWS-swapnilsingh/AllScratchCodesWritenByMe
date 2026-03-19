@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 
+# standard is bias=True on input layers.
 class SimplifiedGRU(nn.Module):
 
     def __init__(self, input_size, hidden_size, output_size):
@@ -9,12 +10,12 @@ class SimplifiedGRU(nn.Module):
         self.hidden_size = hidden_size
 
         # ── Update gate z  (controls memory vs new info) ─────────────────
-        self.Wxz = nn.Linear(input_size,  hidden_size, bias=False)
-        self.Whz = nn.Linear(hidden_size, hidden_size, bias=True )
+        self.Wxz = nn.Linear(input_size,  hidden_size, bias=True)
+        self.Whz = nn.Linear(hidden_size, hidden_size, bias=False )
 
         # ── Candidate hidden state n  (new information) ───────────────────
-        self.Wxn = nn.Linear(input_size,  hidden_size, bias=False)
-        self.Whn = nn.Linear(hidden_size, hidden_size, bias=True )
+        self.Wxn = nn.Linear(input_size,  hidden_size, bias=True)
+        self.Whn = nn.Linear(hidden_size, hidden_size, bias=False )
 
         # ── Output projection  (same Why as your RNN diagram) ─────────────
         self.Why = nn.Linear(hidden_size, output_size, bias=True)
