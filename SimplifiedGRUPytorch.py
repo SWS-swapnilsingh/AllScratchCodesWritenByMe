@@ -2,6 +2,14 @@ import torch
 import torch.nn as nn
 
 
+# ── Simplified GRU has only 1 gate ─────────────────────────
+#
+#   Update gate  z_t = sigmoid( Wxz · x_t  +  Whz · h_{t-1} + b_z )
+#   New gate     n_t = tanh   ( Wxn · x_t  +  Whn · h_{t-1} + b_n )  ← FIXED: No 'r' here
+#   Next hidden  h_t = (1 - z_t) ⊙ h_{t-1}  +  z_t ⊙ n_t
+#
+# ─────────────────────────────────────────────────────────────────────────
+
 # standard is bias=True on input layers.
 class SimplifiedGRU(nn.Module):
 
